@@ -3,15 +3,169 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.0.0/stitch.js"></script>
     <script src="js/feed.js"></script>
   </head>
   <body>
+    <div class="modal fade" id="donation-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black">Make a Donation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="donation-title-text" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="donation-location-text" placeholder="Location">
+                    </div>
+                    <div class="form-group">
+                        <label>Aid Type</label>
+                        <select class="form-control" id="donation-service-type-selector">
+                            <option>Food and Water</option>
+                            <option>Travel Assistance</option>
+                            <option>Everyday Items</option>
+                            <option>Housing</option>
+                            <option>other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="donation-description-textarea" rows="3" placeholder="Description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="request-donate-button" onclick="submitNewDonation()">submit donation</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="request-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color:black">Make a Request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="request-title-text" placeholder="Title">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="request-location-text" placeholder="Location">
+                        </div>
+                        <div class="form-group">
+                            <label>Aid Type</label>
+                            <select class="form-control" id="request-service-type-selector">
+                                <option>Food and Water</option>
+                                <option>Travel Assistance</option>
+                                <option>Everyday Items</option>
+                                <option>Housing</option>
+                                <option>other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="request-description-textarea" rows="3" placeholder="What aid do you need and why..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="request-donate-button" onclick="submitNewRequest()">submit request</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    <div class="modal fade" id="claim-donation-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="claim-modal-name"></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 id="claim-modal-title"></h5>
+                    <h5 id="claim-modal-location"></h5>
+                    <h5 id="claim-modal-description"></h5>
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control" id="donation-description-textarea" rows="3" placeholder="Why you need the donation..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="submit-claim-button" class="request-donate-button" data-dismiss="modal">submit claim</button>
+                </div>
+                </div>
+            </div>
+        </div>
     <nav class="navbar navbar-light bg-light">
       <a class="navbar-brand" href="">
           <img src="img/eleos-logo-color.png" width="100px"/>
       </a>
       <button class="btn btn-outline-danger" onclick="logout()">Logout</button>
-    </nav>          
+    </nav>
+    <div class="feed-box">
+      <div class="feed-title">recent donations</div>
+      <hr class="feed-box-divider"/>
+      <div id="donations">
+        <template id="donation-box-template">
+            <div class="donation-box">
+                <i class="user-icon"></i>
+                <div class="user-name">TEMPLATE</div>
+                <div class="user-donation">TEMPLATE</div>
+                <div class="user-location">TEMPLATE</div>
+                <hr class="donation-box-divider"/>
+            </div>
+        </template>
+      </div>
+    </div>
+    <div class="feed-box">
+        <div class="feed-title">recent requests</div>
+        <hr class="feed-box-divider"/>
+        <div id="requests">
+            <template id="request-box-template">
+                <div class="request-box">
+                    <i class="user-icon"></i>
+                    <div class="user-name">TEMPLATE</div>
+                    <div class="user-donation">TEMPLATE</div>
+                    <div class="user-location">TEMPLATE</div>
+                    <hr class="donation-box-divider"/>
+                </div>
+            </template>
+        </div>
+    </div>
+    <div class="right-column">
+        <div id="request-donate-box">
+            <div class="feed-title">request or donate</div>
+            <hr class="feed-box-divider"/>
+            <div class="button-group">
+                <button class="request-donate-button" data-toggle="modal" data-target="#donation-modal">I want to make a donation</button>
+                <button class="request-donate-button" data-toggle="modal" data-target="#request-modal">I would like to request aid</button>
+            </div>
+        </div>
+        <div id="links-box">
+            <div class="feed-title">other useful links</div>
+            <hr class="feed-box-divider"/>
+            <div class="button-group" style="display: block">
+                <a class="link" href="https://www.disasterassistance.gov/">DisasterAssistance.gov</a>
+                <a class="link" href="https://www.redcross.org/about-us/our-work/disaster-relief.html">RedCross.org</a>
+            </div>
+        </div>
+    </div>
   </body>
 </html>

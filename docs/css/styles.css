@@ -50,3 +50,166 @@ h5 {
     color: red;
     display: none;
 }
+
+.feed-box {
+    background-color: white;
+    border-radius: 20px;
+    width: 30%;
+    margin: 20 0 0 20;
+    height: calc(100vh - 100px);
+    display: inline-block;
+    position: relative;
+    overflow: scroll;
+}
+
+.right-column {
+    display: inline-block;
+    position: relative;
+}
+
+.feed-title {
+    position: absolute;
+    font-family: 'Open Sans', sans-serif;
+    color: #00000082;
+    left: 20px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.feed-box-divider {
+    border-top: 1px solid #00000017;
+    position: relative;
+    top: 35px;
+}
+
+.donation-box-divider {
+    border-top: 1px solid #00000017;
+    position: relative;
+    top: 74px;
+    margin: 0;
+}
+
+#donations {
+    position: relative; 
+    top: 20px;
+}
+
+#requests {
+    position: relative; 
+    top: 20px;
+}
+
+.donation-box {
+    width: 100%;
+    height: 75px;
+    cursor: pointer;
+    position: relative;
+    display: none;
+}
+
+.request-box {
+    width: 100%;
+    height: 75px;
+    cursor: pointer;
+    position: relative;
+    display: none;
+}
+
+.user-icon {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    font-size: 20px;
+    color: #00000082;
+}
+
+.user-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+}
+
+#links-box {
+    position: relative;
+    height: 200px;
+    background-color: white;
+    border-radius: 20px;
+    width: 400px;
+    margin: 20 0 0 20;
+    height: 200px;
+}
+
+.user-location {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    color: #00000082;
+}
+
+.user-donation {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    position: absolute;
+    bottom: 50px;
+    left: 35px;
+    color: #00000082;
+}
+
+.request-donate-button {
+    font-family: 'Open Sans', sans-serif;
+    background-color: transparent;
+    border-color: #8fabd8;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #8fabd8;
+    display: block;
+    margin: 10 auto 10 auto;
+    height: 50px;
+    width: 90%;
+    text-align: center;
+
+}
+
+#request-donate-box {
+    position: relative;
+    height: 200px;
+    background-color: white;
+    border-radius: 20px;
+    width: 400px;
+    margin: 20 0 0 20;
+    height: 200px;
+}
+
+.button-group {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+}
+
+#claim-donation-modal .modal-content {
+    background-color: #8fabd8;
+    border-radius: 20px;
+}
+
+#submit-claim-button {
+    font-family: 'Open Sans', sans-serif;
+    background-color: transparent;
+    border-color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    display: block;
+    margin: 10 auto 10 auto;
+    height: 50px;
+    width: 90%;
+    text-align: center;
+}
+
+.link {
+    position: relative;
+    left: 20px;
+}

@@ -27,7 +27,6 @@ async function handleLogin() {
 
 async function emailPasswordAuth(email, password) {
     if (!client.auth.isLoggedIn) {
-      // Log the user in
       const credential = new UserPasswordCredential(email, password);
       await client.auth.loginWithCredential(credential).then((id) => {
         window.location.href = "file:///Users/Ben/Documents/Eleos/docs/dashboard.html";
