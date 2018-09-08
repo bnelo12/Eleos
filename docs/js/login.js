@@ -1,7 +1,9 @@
-// Initialize the App Client
 const client = stitch.Stitch.initializeDefaultAppClient("eleos-esrny");
-// Get a MongoDB Service Client
 const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('posts');
+
+if (client.auth.isLoggedIn) {
+    window.location.href = "file:///Users/Ben/Documents/Eleos/docs/dashboard.html";
+}
 
 const {
     Stitch,
@@ -27,6 +29,12 @@ async function emailPasswordAuth(email, password) {
     if (!client.auth.isLoggedIn) {
       // Log the user in
       const credential = new UserPasswordCredential(email, password);
-      await client.auth.loginWithCredential(credential);
+      await client.auth.loginWithCredential(credential).then((id) => {
+        window.location.href = "file:///Users/Ben/Documents/Eleos/docs/dashboard.html";
+      })
+      .catch((err) => {
+        let errorMsg = document.getElementById("login-credentials-error");
+        errorMsg.style.display = "block";
+      });
     }
   }

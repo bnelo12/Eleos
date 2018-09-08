@@ -45,3 +45,8 @@ h5 {
     border-color: #8fabd8;
     width: 100%;
 }
+
+#login-credentials-error {
+    color: red;
+    display: none;
+}
