@@ -89,26 +89,51 @@
             </div>
         </div>
     <div class="modal fade" id="claim-donation-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="claim-modal-name"></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 id="claim-modal-title"></h5>
+                <h5 id="claim-modal-location"></h5>
+                <h5 id="claim-modal-description"></h5>
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control" id="donation-description-textarea" rows="3" placeholder="Get in touch and explain your circumstances..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="submit-claim-button" class="request-donate-button" data-dismiss="modal">submit claim</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="fufill-request-modal" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="claim-modal-name"></h3>
+                    <h3 class="modal-title" id="fufill-modal-name"></h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h4 id="claim-modal-title"></h5>
-                    <h5 id="claim-modal-location"></h5>
-                    <h5 id="claim-modal-description"></h5>
+                    <h4 id="fufill-modal-title"></h5>
+                    <h5 id="fufill-modal-location"></h5>
+                    <h5 id="fufill-modal-description"></h5>
                     <form>
                         <div class="form-group">
-                            <textarea class="form-control" id="donation-description-textarea" rows="3" placeholder="Why you need the donation..."></textarea>
+                            <textarea class="form-control" id="fufill-description-textarea" rows="3" placeholder="Get in touch and send your goods!"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button id="submit-claim-button" class="request-donate-button" data-dismiss="modal">submit claim</button>
+                    <button id="submit-claim-button" class="request-donate-button" data-dismiss="modal">start the conversation</button>
                 </div>
                 </div>
             </div>

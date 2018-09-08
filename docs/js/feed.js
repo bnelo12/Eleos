@@ -16,7 +16,7 @@ var requestsList = [];
 iconTypeConvert = {
     "Food and Water": "fas fa-utensils",
     "Travel Assistance": "fas fa-car",
-    "Everyday Items": "fas fa-car",
+    "Everyday Items": "fas fa-couch",
     "Housing": "fas fa-home",
     "other": "fas fa-circle"
 }
@@ -111,7 +111,7 @@ function appendRequestToRequestsFeed(requestDoc, animate) {
         $("#" + id).slideDown(0);
     }
     $("#" + id).click(() => {
-        //openClaimDonationModal(donationDoc);
+        openFufillRequestModal(requestDoc);
     });
     requestsList.push(requestDoc);
 }
@@ -137,6 +137,14 @@ function openClaimDonationModal(doc) {
     $('#claim-modal-location').text(doc.location);
     $('#claim-modal-title').text(doc.title)
     $('#claim-donation-modal').modal('show');
+}
+
+function openFufillRequestModal(doc) {
+    $('#fufill-modal-description').text(doc.description);
+    $('#fufill-modal-name').text(doc.name);
+    $('#fufill-modal-location').text(doc.location);
+    $('#fufill-modal-title').text(doc.title)
+    $('#fufill-request-modal').modal('show');
 }
 
 function getLoginFormInfo() {
