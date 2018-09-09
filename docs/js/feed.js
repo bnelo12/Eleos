@@ -205,15 +205,14 @@ async function executeSearch() {
         requestsDB.find({}).asArray()
         .then((docs) => {
             docs.forEach((doc) => {
-                const wordSearch = query.split(' ').join('|')
                 const location = query.match("\bin\b")
+                let wordSearch = query.replace("in ", "")
+                wordSearch = wordSearch.split(' ').join('|')
                 const removed = doc.location.replace(",", "");
-                //console.log(wordSearch)
-                console.log(removed.match(wordSearch))
-                if (location && !removed.match(wordSearch)) {
+                if (location && !removed.match(wordSearch,"i")) {
                     return;
                 }
-                if (doc.description.match(wordSearch)) {
+                if (doc.title.match(wordSearch,"i")) {
                     appendResultToSearchFeed(doc, false);
                 }
             });
@@ -223,15 +222,14 @@ async function executeSearch() {
         donationDB.find({}).asArray()
         .then((docs) => {
             docs.forEach((doc) => {
-                const wordSearch = query.split(' ').join('|')
                 const location = query.match("\bin\b")
+                let wordSearch = query.replace("in ", "")
+                wordSearch = wordSearch.split(' ').join('|')
                 const removed = doc.location.replace(",", "");
-                //console.log(wordSearch)
-                console.log(removed.match(wordSearch))
                 if (location && !removed.match(wordSearch)) {
                     return;
                 }
-                if (doc.description.match(wordSearch)) {
+                if (doc.title.match(wordSearch)) {
                     appendResultToSearchFeed(doc, false);
                 }
             });
@@ -248,5 +246,6 @@ $(document).ready(() => {
     };
     $('#search-modal').on('hidden.bs.modal', () => {
         searchList = [];
+        $('#searches').empty();
     })
 });
