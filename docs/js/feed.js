@@ -12,6 +12,7 @@ var userId = client.auth.user.id;
 var userName = "";
 var donationsList = [];
 var requestsList = [];
+var searchList = [];
 
 iconTypeConvert = {
     "Food and Water": "fas fa-utensils",
@@ -44,7 +45,6 @@ async function submitNewDonation() {
     let doc = getLoginFormInfo();
     await donationDB.insertOne(doc)
         .then((res) => {
-            //appendDonationToDonationFeed(doc, true);
             socket.emit('donation-upload', doc);
             const titleEl = document.getElementById("donation-title-text");
             const locationEl = document.getElementById("donation-location-text");
@@ -60,7 +60,6 @@ async function submitNewRequest() {
     let doc = getrequestFormInfo();
     await requestsDB.insertOne(doc)
         .then((res) => {
-            //appendDonationToDonationFeed(doc, true);
             socket.emit('request-upload', doc);
             const titleEl = document.getElementById("request-title-text");
             const locationEl = document.getElementById("request-location-text");
@@ -116,6 +115,28 @@ function appendRequestToRequestsFeed(requestDoc, animate) {
     requestsList.push(requestDoc);
 }
 
+function appendResultToSearchFeed(searchDoc, animate) {
+    let template = document.querySelector('#search-box-template');
+    let clone = document.importNode(template.content, true);
+    $(clone).find('.user-name').text(searchDoc.name);
+    $(clone).find('.user-donation').text(searchDoc.title);
+    $(clone).find('.user-location').text(searchDoc.location);
+    $(clone).find('.user-icon').addClass(iconTypeConvert[searchDoc.service])
+    // let id = ("contact-" + name).replace(/\s+/g, '-');
+    let id = 'search-' + searchList.length;
+    $(clone).find('.search-box').attr('id', id);
+    let orgElem = $('#searches').prepend(clone);
+    if (animate) {
+        $("#" + id).slideDown();
+    } else {
+        $("#" + id).slideDown(0);
+    }
+    $("#" + id).click(() => {
+        openFufillRequestModal(searchDoc);
+    });
+    searchList.push(searchDoc);
+}
+
 function getDonations() {
     let cursor = donationDB.find({}).asArray()
         .then(docs => docs.map(doc => appendDonationToDonationFeed(doc, false)));
@@ -169,3 +190,63 @@ function getrequestFormInfo() {
     return { title: title, location: location, service: service, description: description, name: userName };
 }
 
+function openSearchModal() {
+    $("#search-modal").modal('show');
+}
+
+async function executeSearch() {
+    var option = $( 'input[name=inlineRadioOptions]:checked' ).val();
+    if (!option) {
+        alert("Please select a search option!");
+        return;
+    }
+    var query = $('#search-input').val();
+    if (option === "request") {
+        requestsDB.find({}).asArray()
+        .then((docs) => {
+            docs.forEach((doc) => {
+                const wordSearch = query.split(' ').join('|')
+                const location = query.match("\bin\b")
+                const removed = doc.location.replace(",", "");
+                //console.log(wordSearch)
+                console.log(removed.match(wordSearch))
+                if (location && !removed.match(wordSearch)) {
+                    return;
+                }
+                if (doc.description.match(wordSearch)) {
+                    appendResultToSearchFeed(doc, false);
+                }
+            });
+        })
+    }
+    if (option === "donation") {
+        donationDB.find({}).asArray()
+        .then((docs) => {
+            docs.forEach((doc) => {
+                const wordSearch = query.split(' ').join('|')
+                const location = query.match("\bin\b")
+                const removed = doc.location.replace(",", "");
+                //console.log(wordSearch)
+                console.log(removed.match(wordSearch))
+                if (location && !removed.match(wordSearch)) {
+                    return;
+                }
+                if (doc.description.match(wordSearch)) {
+                    appendResultToSearchFeed(doc, false);
+                }
+            });
+        })
+    }
+    openSearchModal();
+}
+
+$(document).ready(() => {
+    document.getElementById('search-input').onkeydown = function(e){
+        if(e.keyCode == 13){
+            executeSearch()
+        }
+    };
+    $('#search-modal').on('hidden.bs.modal', () => {
+        searchList = [];
+    })
+});

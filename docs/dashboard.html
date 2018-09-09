@@ -51,43 +51,68 @@
         </div>
     </div>
     <div class="modal fade" id="request-modal" tabindex="-1" role="dialog"  aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black">Make a Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="request-title-text" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="request-location-text" placeholder="Location">
+                    </div>
+                    <div class="form-group">
+                        <label>Aid Type</label>
+                        <select class="form-control" id="request-service-type-selector">
+                            <option>Food and Water</option>
+                            <option>Travel Assistance</option>
+                            <option>Everyday Items</option>
+                            <option>Housing</option>
+                            <option>other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="request-description-textarea" rows="3" placeholder="What aid do you need and why..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="request-donate-button" onclick="submitNewRequest()">submit request</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="search-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color:black">Make a Request</h5>
+                    <h3 class="modal-title" style="color: #8fabd8">Results</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="request-title-text" placeholder="Title">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="request-location-text" placeholder="Location">
-                        </div>
-                        <div class="form-group">
-                            <label>Aid Type</label>
-                            <select class="form-control" id="request-service-type-selector">
-                                <option>Food and Water</option>
-                                <option>Travel Assistance</option>
-                                <option>Everyday Items</option>
-                                <option>Housing</option>
-                                <option>other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" id="request-description-textarea" rows="3" placeholder="What aid do you need and why..."></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="request-donate-button" onclick="submitNewRequest()">submit request</button>
-                </div>
+                    <div id="searches">
+                        <template id="search-box-template">
+                            <div class="search-box">
+                                <i class="user-icon"></i>
+                                <div class="user-name">TEMPLATE</div>
+                                <div class="user-donation">TEMPLATE</div>
+                                <div class="user-location">TEMPLATE</div>
+                                <hr class="donation-box-divider"/>
+                            </div>
+                        </template>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     <div class="modal fade" id="claim-donation-modal" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -142,7 +167,10 @@
       <a class="navbar-brand" href="">
           <img src="img/eleos-logo-color.png" width="100px"/>
       </a>
-      <button class="btn btn-outline-danger" onclick="logout()">Logout</button>
+      <span>
+            <img src="img/mail-icon.png" width="40px" style="margin-right: 10px; cursor: pointer;"/>
+            <button class="btn btn-outline-danger" onclick="logout()">Logout</button>
+      </span>
     </nav>
     <div class="feed-box">
       <div class="feed-title">recent donations</div>
@@ -175,6 +203,23 @@
         </div>
     </div>
     <div class="right-column">
+        <div id="request-donate-box" style="height: 150px;">
+            <div class="feed-title">search</div>
+            <hr class="feed-box-divider"/>
+            <div class="button-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="donations-radio" value="donation">
+                    <label class="form-check-label" for="donations-radio">donations</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="requests-radio" value="request">
+                    <label class="form-check-label" for="requests-radio">requests</label>
+                </div>
+                <div class="form-group">
+                    <input style="margin:auto; margin-top: 10px; width: 80%; text-align: center;" type="text" class="form-control" id="search-input" placeholder="e.g. children's clothes in San Francisco">
+                </div>
+            </div>
+        </div>
         <div id="request-donate-box">
             <div class="feed-title">request or donate</div>
             <hr class="feed-box-divider"/>
